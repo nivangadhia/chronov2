@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0c0d0c" id="theme-color-meta">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='8' fill='%23c9f24a'/%3E%3Ccircle cx='18' cy='18' r='9.6' fill='none' stroke='%230c0d0c' stroke-width='2'/%3E%3Cpath d='M18 11.8V18l4.5 2.7' fill='none' stroke='%230c0d0c' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <title>BCA Chrono</title>
+  <meta name="description" content="A precise daily dashboard for Bergen County Academies: schedule, live bells, campus weather, and faculty absences.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design.css?v=16">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.4V12l3.1 1.9"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.2c.4-3.3 2.6-5.1 5.5-5.1s5.1 1.8 5.5 5.1"/><path d="M16.1 5.4a3 3 0 0 1 0 5.2"/><path d="M17.2 14.2c1.9.6 3.1 2.2 3.3 4.6"/></symbol>
+    <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 3.2v10.9"/><path d="m7.6 9.8 4.4 4.4 4.4-4.4"/><path d="M4.2 17.1v2.2A1.7 1.7 0 0 0 5.9 21h12.2a1.7 1.7 0 0 0 1.7-1.7v-2.2"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h7M15 7h5M4 17h3M11 17h9"/><circle cx="13" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V3.8h10V9"/><path d="M7 18H5.2A1.7 1.7 0 0 1 3.5 16.3v-5.6A1.7 1.7 0 0 1 5.2 9h13.6a1.7 1.7 0 0 1 1.7 1.7v5.6a1.7 1.7 0 0 1-1.7 1.7H17"/><rect x="7" y="14" width="10" height="6.5" rx="1"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.5 15.5 4 4"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 1 0-2.3 6.4"/><path d="M20 4.5v7h-7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m5.5 5.5 13 13M18.5 5.5l-13 13"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9.5a6 6 0 1 0-12 0c0 5-2 6.5-2 6.5h16s-2-1.5-2-6.5Z"/><path d="M9.8 19.5a2.4 2.4 0 0 0 4.4 0"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7.2 18.5h9.3a3.8 3.8 0 0 0 .3-7.6A5.8 5.8 0 0 0 5.7 9.7a4.4 4.4 0 0 0 1.5 8.8Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.6A8.6 8.6 0 0 1 9.4 4 8.7 8.7 0 1 0 20 14.6Z"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="12" rx="1.5"/><path d="M9 20h6M12 16v4"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4.5 12h15M14 6.5l5.5 5.5-5.5 5.5"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-planner" viewBox="0 0 24 24"><rect x="4" y="3.8" width="16" height="16.8" rx="1.7"/><path d="M8.2 8.2h7.6M8.2 12h7.6M8.2 15.8h4.8"/><path d="M8 2.5v3M16 2.5v3"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 21V3.8M6 4.2h11.5l-2.2 4 2.2 4H6"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.8 21 20H3L12 3.8Z"/><path d="M12 9v4.5M12 17h.01"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M19 10.2c0 5.1-7 10.3-7 10.3s-7-5.2-7-10.3a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h10.5a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h6"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 3.2S5.5 10 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10 12 3.2 12 3.2Z"/></symbol>
+    <symbol id="i-thermometer" viewBox="0 0 24 24"><path d="M10 14.2V5.5a2 2 0 0 1 4 0v8.7a4 4 0 1 1-4 0Z"/><path d="M12 17.5v-6"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4Z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9 3.5h6M6.5 6.5l.8 13.2A1.4 1.4 0 0 0 8.7 21h6.6a1.4 1.4 0 0 0 1.4-1.3l.8-13.2M10 10.5v6M14 10.5v6"/></symbol>
+    <symbol id="i-log-out" viewBox="0 0 24 24"><path d="M14 4.5H6.5A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5H14"/><path d="M10.5 12H21M17 8.5l3.5 3.5L17 15.5"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 8.5A8 8 0 0 0 5.2 6.8L3 9M4 15.5a8 8 0 0 0 14.8 1.7L21 15"/><path d="M3 4.5V9h4.5M21 19.5V15h-4.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.2 2.4 3.3 5.2 3.3 8.5S14.2 18.1 12 20.5c-2.2-2.4-3.3-5.2-3.3-8.5S9.8 5.9 12 3.5Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8h.01"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0 0 17c1.4 0 2.2-.9 2.2-1.9 0-1.4-1.5-1.8-1.5-3.1 0-1 .8-1.7 2-1.7h1.8a4 4 0 0 0 4-4c0-3.5-3.8-6.3-8.5-6.3Z"/><circle cx="7.8" cy="10" r=".8" fill="currentColor" stroke="none"/><circle cx="9.8" cy="6.8" r=".8" fill="currentColor" stroke="none"/><circle cx="14" cy="6.5" r=".8" fill="currentColor" stroke="none"/><circle cx="17" cy="9" r=".8" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20c.5-3.8 3.2-5.8 7.2-5.8s6.7 2 7.2 5.8"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M6.5 17.5 17.5 6.5M8 6.5h9.5V16"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4.5L19 9.5a2.1 2.1 0 0 0-3-3L5.5 17 4 20Z"/><path d="m13.8 8.2 3 3"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3.5v11M7.5 10l4.5 4.5 4.5-4.5"/><path d="M4.5 20.5h15"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <a class="brand" href="#/today" aria-label="BCA Chrono, go to Today">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="10.4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M18 11.4V18l4.6 2.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18 6.8v1.8M29.2 18h-1.8M18 29.2v-1.8M6.8 18h1.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">BCA Chrono</span>
+          <span class="brand-sub">Bergen County Academies</span>
+        </span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Sections">
+        <a class="nav-link" href="#/today" data-route="today">
+          <svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>
+          <span class="nav-label">Today</span>
+          <span class="nav-index" aria-hidden="true">01</span>
+        </a>
+        <a class="nav-link" href="#/week" data-route="week">
+          <svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg>
+          <span class="nav-label">Week</span>
+          <span class="nav-index" aria-hidden="true">02</span>
+        </a>
+        <a class="nav-link" href="#/planner" data-route="planner">
+          <svg class="icon" aria-hidden="true"><use href="#i-planner"></use></svg>
+          <span class="nav-label">Planner</span>
+          <span class="nav-index" aria-hidden="true">03</span>
+        </a>
+        <a class="nav-link" href="#/month" data-route="month">
+          <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
+          <span class="nav-label">Month</span>
+          <span class="nav-index" aria-hidden="true">04</span>
+        </a>
+        <a class="nav-link" href="#/faculty" data-route="faculty">
+          <svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg>
+          <span class="nav-label">Faculty</span>
+          <span class="nav-index" aria-hidden="true">05</span>
+        </a>
+        <a class="nav-link" href="#/import" data-route="import">
+          <svg class="icon" aria-hidden="true"><use href="#i-import"></use></svg>
+          <span class="nav-label">Import</span>
+          <span class="nav-index" aria-hidden="true">06</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+
+      <div class="sidebar-timer" role="group" aria-label="Live class timer">
+        <div class="sidebar-timer-top">
+          <span id="sidebar-phase">Checking the clock</span>
+          <span id="sidebar-bell-label">Full day</span>
+        </div>
+        <div class="sidebar-timer-time" id="sidebar-countdown">8:00 AM</div>
+        <div class="sidebar-timer-title" id="sidebar-title">First bell at 8:00 AM</div>
+      </div>
+
+      <div class="sidebar-tools">
+        <button class="icon-btn" type="button" data-action="toggle-theme" aria-label="Switch theme" title="Switch theme">
+          <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+        </button>
+        <button class="icon-btn" type="button" data-action="open-settings" aria-label="Open settings" title="Settings">
+          <svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>
+        </button>
+        <button class="sidebar-sync" type="button" data-action="open-settings" data-settings-target="cloud" aria-label="Cloud sync status, open settings">
+          <span class="status-dot" id="sync-dot"></span>
+          <span id="sync-status">Local only</span>
+        </button>
+      </div>
+      <div class="sidebar-version">Chrono 2.0 <span>Hackensack, NJ</span></div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <a class="topbar-brand" href="#/today" aria-label="BCA Chrono, go to Today">
+          <span class="brand-mark brand-mark-sm" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <circle cx="18" cy="18" r="10.4" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M18 11.4V18l4.6 2.7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>BCA Chrono</span>
+        </a>
+
+        <div class="topbar-context">
+          <span class="topbar-location">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="#i-map-pin"></use></svg>
+            Hackensack, NJ
+          </span>
+          <span class="topbar-rule" aria-hidden="true"></span>
+          <span class="topbar-date" id="topbar-date">Monday, October 26, 2026</span>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="segmented" role="group" aria-label="Bell schedule">
+            <button class="seg-btn" type="button" data-action="set-bell" data-bell="full" aria-pressed="true">Full day</button>
+            <button class="seg-btn" type="button" data-action="set-bell" data-bell="half" aria-pressed="false">Half day</button>
+          </div>
+          <button class="btn btn-ghost btn-sm topbar-print" type="button" data-action="print">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="#i-print"></use></svg>
+            <span>Print</span>
+          </button>
+          <button class="icon-btn" type="button" data-action="open-settings" aria-label="Open settings" title="Settings">
+            <svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>
+          </button>
+        </div>
+      </header>
+
+      <main id="main-content" tabindex="-1">
+        <section class="view" id="view-today" data-view="today" aria-label="Today"></section>
+        <section class="view" id="view-week" data-view="week" aria-label="Week" hidden></section>
+        <section class="view" id="view-planner" data-view="planner" aria-label="Planner" hidden></section>
+        <section class="view" id="view-month" data-view="month" aria-label="Month calendar" hidden></section>
+        <section class="view" id="view-faculty" data-view="faculty" aria-label="Faculty absences" hidden></section>
+        <section class="view" id="view-import" data-view="import" aria-label="Import schedule" hidden></section>
+      </main>
+
+      <footer class="app-footer">
+        <span>BCA Chrono. Built for the Bergen County Academies day.</span>
+        <span class="footer-links">
+          <span>Weather by Open-Meteo</span>
+          <span class="footer-rule" aria-hidden="true"></span>
+          <span>Absences via BCA faculty sheet</span>
+        </span>
+      </footer>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="#/today" data-route="today" aria-label="Today">
+      <svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>
+      <span>Today</span>
+    </a>
+    <a href="#/week" data-route="week" aria-label="Week">
+      <svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg>
+      <span>Week</span>
+    </a>
+    <a href="#/planner" data-route="planner" aria-label="Planner">
+      <svg class="icon" aria-hidden="true"><use href="#i-planner"></use></svg>
+      <span>Planner</span>
+    </a>
+    <a href="#/month" data-route="month" aria-label="Month">
+      <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
+      <span>Month</span>
+    </a>
+    <a href="#/faculty" data-route="faculty" aria-label="Faculty">
+      <svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg>
+      <span>Faculty</span>
+    </a>
+    <a href="#/import" data-route="import" aria-label="Import">
+      <svg class="icon" aria-hidden="true"><use href="#i-import"></use></svg>
+      <span>Import</span>
+    </a>
+    <button type="button" data-action="open-settings" aria-label="Settings">
+      <svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>
+      <span>Settings</span>
+    </button>
+  </nav>
+
+  <div class="toast-region" id="toast-region" role="status" aria-live="polite" aria-atomic="false"></div>
+
+  <dialog class="dialog dialog-wide" id="settings-dialog" aria-labelledby="settings-title">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Preferences</p>
+        <h2 class="dialog-title" id="settings-title">Settings</h2>
+      </div>
+      <button class="icon-btn" type="button" data-action="close-settings" aria-label="Close settings">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+      </button>
+    </div>
+    <div class="settings-layout">
+      <nav class="settings-nav" aria-label="Settings sections">
+        <button type="button" class="settings-nav-link is-active" data-scroll-to="settings-appearance">Appearance</button>
+        <button type="button" class="settings-nav-link" data-scroll-to="settings-bells">Bells and alerts</button>
+        <button type="button" class="settings-nav-link" data-scroll-to="settings-colors">Course colors</button>
+        <button type="button" class="settings-nav-link" data-scroll-to="settings-cloud">Cloud sync</button>
+        <button type="button" class="settings-nav-link" data-scroll-to="settings-data">Data and print</button>
+      </nav>
+      <div class="settings-body" id="settings-body"></div>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="class-dialog" aria-labelledby="class-dialog-title">
+    <form id="class-form" novalidate>
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow" id="class-dialog-eyebrow">Timetable</p>
+          <h2 class="dialog-title" id="class-dialog-title">Add a class</h2>
+        </div>
+        <button class="icon-btn" type="button" data-action="close-class-dialog" aria-label="Close class editor">
+          <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+        </button>
+      </div>
+      <div class="dialog-body" id="class-dialog-body"></div>
+      <div class="dialog-foot">
+        <button class="btn btn-danger-ghost" type="button" id="class-delete-btn" data-action="delete-class" hidden>
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#i-trash"></use></svg>
+          Delete class
+        </button>
+        <span class="dialog-foot-spacer"></span>
+        <button class="btn btn-ghost" type="button" data-action="close-class-dialog">Cancel</button>
+        <button class="btn btn-primary" type="submit" id="class-save-btn">Save class</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="dialog dialog-sm" id="auth-dialog" aria-labelledby="auth-title">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Optional</p>
+        <h2 class="dialog-title" id="auth-title">Cloud sync</h2>
+      </div>
+      <button class="icon-btn" type="button" data-action="close-auth" aria-label="Close cloud sync">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+      </button>
+    </div>
+    <div class="dialog-body" id="auth-body"></div>
+  </dialog>
+
+  <dialog class="dialog dialog-sm" id="confirm-dialog" aria-labelledby="confirm-title">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow" id="confirm-eyebrow">Please confirm</p>
+        <h2 class="dialog-title" id="confirm-title">Confirm</h2>
+      </div>
+      <button class="icon-btn" type="button" data-action="confirm-cancel" aria-label="Cancel">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+      </button>
+    </div>
+    <div class="dialog-body">
+      <p class="dialog-copy" id="confirm-message"></p>
+    </div>
+    <div class="dialog-foot">
+      <button class="btn btn-ghost" type="button" data-action="confirm-cancel">Cancel</button>
+      <button class="btn btn-danger" type="button" id="confirm-ok" data-action="confirm-ok">Confirm</button>
+    </div>
+  </dialog>
+
+  <dialog class="dialog dialog-sm" id="sync-choice-dialog" aria-labelledby="sync-choice-title">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Cloud sync</p>
+        <h2 class="dialog-title" id="sync-choice-title">Two schedules found</h2>
+      </div>
+      <button class="icon-btn" type="button" data-action="close-sync-choice" aria-label="Close">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+      </button>
+    </div>
+    <div class="dialog-body">
+      <p class="dialog-copy" id="sync-choice-message">A schedule is already saved to this account. Choose which copy should stay on this device.</p>
+      <div class="sync-choice-actions">
+        <button class="btn btn-outline" type="button" data-action="sync-use-cloud">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#i-download"></use></svg>
+          Use cloud copy
+        </button>
+        <button class="btn btn-primary" type="button" data-action="sync-use-local">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#i-cloud"></use></svg>
+          Keep this device
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="planner-dialog" aria-labelledby="planner-dialog-title">
+    <form id="planner-form" novalidate>
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow" id="planner-dialog-eyebrow">Planner</p>
+          <h2 class="dialog-title" id="planner-dialog-title">Add planner item</h2>
+        </div>
+        <button class="icon-btn" type="button" data-action="close-planner-dialog" aria-label="Close planner item editor">
+          <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+        </button>
+      </div>
+      <div class="dialog-body" id="planner-dialog-body"></div>
+      <div class="dialog-foot">
+        <button class="btn btn-danger-ghost" type="button" id="planner-delete-btn" data-action="delete-planner" hidden>
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#i-trash"></use></svg>
+          Delete item
+        </button>
+        <span class="dialog-foot-spacer"></span>
+        <button class="btn btn-ghost" type="button" data-action="close-planner-dialog">Cancel</button>
+        <button class="btn btn-primary" type="submit" id="planner-save-btn">Add item</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="dialog dialog-wide" id="planner-import-dialog" aria-labelledby="planner-import-title">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Planner import</p>
+        <h2 class="dialog-title" id="planner-import-title">Paste dates and events.</h2>
+      </div>
+      <button class="icon-btn" type="button" data-action="close-planner-import" aria-label="Close planner import">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+      </button>
+    </div>
+    <div class="dialog-body">
+      <p class="dialog-copy">Paste CSV or one item per line. A date and title are enough. Titles that read No School or Half Day automatically change that date's schedule.</p>
+      <div class="field" style="margin-top:14px;">
+        <label for="planner-import-text">Dates and events</label>
+        <textarea class="input import-textarea planner-import-text" id="planner-import-text" data-planner-import-text spellcheck="false" placeholder="2026-11-26, Thanksgiving, date&#10;2026-11-25, No School, event&#10;2026-12-11, Half Day, event"></textarea>
+        <div class="field-hint">Supported dates: 2026-11-26, 11/26/2026, or November 26, 2026. Optional columns: title, type, course, notes, impact.</div>
+      </div>
+      <div class="planner-import-preview" id="planner-import-preview"></div>
+    </div>
+    <div class="dialog-foot">
+      <button class="btn btn-outline" type="button" data-action="paste-planner-clipboard">
+        <svg class="icon icon-sm" aria-hidden="true"><use href="#i-import"></use></svg>
+        Paste clipboard
+      </button>
+      <span class="dialog-foot-spacer"></span>
+      <button class="btn btn-ghost" type="button" data-action="close-planner-import">Cancel</button>
+      <button class="btn btn-primary" type="button" data-action="import-planner" id="planner-import-btn">Import items</button>
+    </div>
+  </dialog>
+
+  <div id="print-root" aria-hidden="true"></div>
+
+  <noscript>
+    <div class="noscript">BCA Chrono needs JavaScript to render the timetable, live timer, weather, and faculty feed.</div>
+  </noscript>
+
+  <script src="js/parser.js?v=16"></script>
+  <script src="js/weather.js?v=16"></script>
+  <script src="js/absences.js?v=16"></script>
+  <script src="js/app.js?v=16"></script>
+</body>
+</html>
